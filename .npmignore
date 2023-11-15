@@ -3,3 +3,6 @@ src
 tests
 .vscode
 jest.config.js
+.gitignore
+package-lock.json
+tsconfig.json
