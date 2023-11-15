@@ -11,12 +11,12 @@ import {
   isTrackLicenseValid,
   confirmLicense,
   isTrackReceiptValid,
+  getRandomR,
 } from "../src/licenseUtils";
 import {
   generatePrivateKey,
   getPublicKey,
   getTimeInSeconds,
-  randomUuidMaker,
 } from "./testUtils";
 
 describe("licenseUtils", () => {
@@ -31,7 +31,7 @@ describe("licenseUtils", () => {
     hostPubkey = getPublicKey(hostPrivkey);
     clientPrivkey = generatePrivateKey();
     clientPubkey = getPublicKey(clientPrivkey);
-    randomUuid = randomUuidMaker();
+    randomUuid = getRandomR();
   });
 
   describe("isTrackRequestValid", () => {
@@ -143,7 +143,7 @@ describe("licenseUtils", () => {
         r: randomUuid,
         trackId: "some-track-id",
       };
-      const randomStr = randomUuidMaker();
+      const randomStr = getRandomR();
       const license: SingleTrackLicense = {
         ...req,
         hostPubkey,
@@ -182,13 +182,13 @@ describe("licenseUtils", () => {
       const req1: SingleTrackRequest = {
         timestamp: getTimeInSeconds(),
         clientPubkey: getPublicKey(generatePrivateKey()),
-        r: randomUuidMaker(),
+        r: getRandomR(),
         trackId: "some-track-id",
       };
       const req2: SingleTrackRequest = {
         timestamp: getTimeInSeconds(),
         clientPubkey: getPublicKey(generatePrivateKey()),
-        r: randomUuidMaker(),
+        r: getRandomR(),
         trackId: "some-other-track-id",
       };
       const hash1 = getRequestHash(req1);
@@ -240,7 +240,7 @@ describe("licenseUtils", () => {
 
     it("should return null for an invalid license", () => {
       const clientPrivkey = generatePrivateKey();
-      const randomStr = randomUuidMaker();
+      const randomStr = getRandomR();
       const license: SingleTrackLicense = {
         timestamp: getTimeInSeconds(),
         hostPubkey: "invalid-pubkey",
@@ -277,10 +277,18 @@ describe("licenseUtils", () => {
       const license = approveRequest(req, hostPrivkey);
       const receipt: SingleTrackReceipt = {
         ...license!,
-        clientSignature: randomUuidMaker() + randomUuidMaker(),
+        clientSignature: getRandomR() + getRandomR(),
         clientPubkey,
       };
       expect(isTrackReceiptValid(receipt)).toBe(false);
+    });
+  });
+
+  describe("getRandomR", () => {
+    it("should return a string of length 32", () => {
+      const r = getRandomR();
+      expect(r).toBeInstanceOf(String);
+      expect(r.length).toBe(32);
     });
   });
 });

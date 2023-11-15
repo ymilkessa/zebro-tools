@@ -1,6 +1,6 @@
 import { schnorr } from "@noble/curves/secp256k1";
 import { sha256 } from "@noble/hashes/sha256";
-import { bytesToHex } from "@noble/hashes/utils";
+import { bytesToHex, randomBytes } from "@noble/hashes/utils";
 import {
   SingleTrackLicense,
   SingleTrackReceipt,
@@ -97,4 +97,8 @@ export function isTrackReceiptValid(receipt: SingleTrackReceipt): boolean {
     receipt.hostSignature,
     receipt.clientPubkey
   );
+}
+
+export function getRandomR() {
+  return bytesToHex(randomBytes(16));
 }

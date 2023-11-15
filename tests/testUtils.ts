@@ -9,10 +9,6 @@ export function getPublicKey(privateKey: string): string {
   return bytesToHex(schnorr.getPublicKey(privateKey));
 }
 
-export function randomUuidMaker(): string {
-  return bytesToHex(randomBytes(16));
-}
-
 export function getTimeInSeconds(): number {
   return Math.floor(Date.now() / 1000);
 }
