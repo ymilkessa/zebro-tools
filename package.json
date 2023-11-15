@@ -11,9 +11,9 @@
     "build": "tsc"
   },
   "name": "zebro-tools",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "Utils for developing on the Zebro protocol.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ymilkessa/zebro-tools.git"
@@ -33,5 +33,8 @@
   "dependencies": {
     "@noble/curves": "^1.2.0",
     "@noble/hashes": "^1.3.2"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }
