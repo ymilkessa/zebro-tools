@@ -6,3 +6,4 @@ jest.config.js
 .gitignore
 package-lock.json
 tsconfig.json
+examples
